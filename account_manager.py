@@ -95,3 +95,25 @@ class AccountManager:
             error_msg = self.translator.get('account.suggest_email_failed', error=str(e)) if self.translator else f'Failed to suggest email: {str(e)}'
             print(f"{Fore.RED}{EMOJI['ERROR']} {error_msg}{Style.RESET_ALL}")
             return None
+
+            def check_account_status(self):
+                        """Check if the Cursor account has been successfully cracked/reset"""
+                        try:
+                                        if not os.path.exists(self.accounts_file):
+                                                            print(f"{Fore.YELLOW}{EMOJI['INFO']} {self.translator.get('account.check_status_no_account')} {Style.RESET_ALL}")
+                                                            return False
+
+            with open(self.accounts_file, 'r', encoding='utf-8') as f:
+                                content = f.read()
+
+            if not content or '~s0' not in content:
+                                print(f"{Fore.RED}{EMOJI['ERROR']} {self.translator.get('account.check_status_not_cracked')} {Style.RESET_ALL}")
+                                return False
+
+            print(f"{Fore.GREEN}{EMOJI['SUCCESS']} {self.translator.get('account.check_status_success')} {Style.RESET_ALL}")
+                        return True
+
+        except Exception as e:
+                        error_msg = self.translator.get('account.check_status_failed', error=str(e))
+                        print(f"{Fore.RED}{EMOJI['ERROR']} {error_msg}{Style.RESET_ALL}")
+                        return False
